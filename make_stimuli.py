@@ -54,7 +54,12 @@ def generate_images(
             img = function(illusion_strength=strength, difference=difference, **kwargs).to_image(
                 width=width, height=height, target_only=target_only
             )
-            path = f"{name}_{np.round(strength, 5):<07}_{np.round(difference, 5):<07}.png"
+
+            if target_only is True:
+                tar = "perceptual_"
+            else:
+                tar = ""
+            path = f"{name}_{tar}{np.round(strength, 5):<07}_{np.round(difference, 5):<07}.png"
             img.save("stimuli/" + path)
 
             # Compute expected response
