@@ -127,13 +127,17 @@ def doublelinspace(mini=0.1, maxi=1, size=6, transformation="lin", show=True):
     vec = np.round(np.concatenate((-1 * x[::-1], x)), 5)
     if mini == -0:
         vec = np.delete(vec, [int(size / 2) - 1])
-    return vec
+
+    block1 = np.concatenate((vec[0 : n // 2 : 2], vec[n // 2 + 1 :: 2]))
+    block2 = np.concatenate((vec[1 : n // 2 : 2], vec[n // 2 :: 2]))
+    return vec, block1, block2
 
 
 # =============================================================================
 # Make Stimuli
 # =============================================================================
-data_perceptual = []
+data_perceptual1 = []
+data_perceptual2 = []
 
 data_training = []
 data_block1 = []
@@ -141,53 +145,87 @@ data_block2 = []
 
 # Left-right ======================================================================================
 # -------------------------- Vertical Horizontal Illusion --------------------------
-ill.VerticalHorizontal(illusion_strength=0, difference=1).to_image(width=800, height=600).save(
-    "materials/instructions/VerticalHorizontal_DemoPerceptual.png"
-)
+
 # Perceptual task (target_only)
 # ----------------
 
-diffs = doublelinspace(mini=0.05, maxi=0.225, size=n * 2, transformation="square")
+ill.VerticalHorizontal(illusion_strength=0, difference=0.9).to_image(width=800, height=800).save(
+    "materials/instructions/VerticalHorizontal_DemoPerceptual.png"
+)
 
-data_perceptual = generate_images(
-    data_perceptual,
-    strengths=np.repeat([0], len(diffs)),
-    differences=diffs,
+_, diffs1, diffs2 = doublelinspace(mini=0.05, maxi=0.225, size=n * 2, transformation="square")
+
+data_perceptual1 = generate_images(
+    data_perceptual1,
+    strengths=[0],
+    differences=diffs1,
     function=ill.VerticalHorizontal,
     name="VerticalHorizontal",
 )
 
-# Full
-strengths = doublelinspace(mini=0, maxi=33, size=n, transformation="square")
-diffs = doublelinspace(mini=0.05, maxi=0.225, size=n, transformation="square")
-diff1 = np.concatenate((diffs[0 : n // 2 : 2], diffs[n // 2 + 1 :: 2]))
-diff2 = np.concatenate((diffs[1 : n // 2 : 2], diffs[n // 2 :: 2]))
+data_perceptual2 = generate_images(
+    data_perceptual2,
+    strengths=[0],
+    differences=diffs2,
+    function=ill.VerticalHorizontal,
+    name="VerticalHorizontal",
+)
 
 
-# data_training = generate_images(
-#     data_training,
-#     # strengths=strengths[0 : : (n // 2) - 1],
-#     strengths=strengths[2 : -2 : (n // 2) - 3],
-#     differences=[-0.4, 0.4],
-#     function=ill.VerticalHorizontal,
-#     name="VerticalHorizontal",
-# )
+# Training
+# ----------------
 
-# data_block1 = generate_images(
-#     data_block1,
-#     strengths=strengths[1:-1:2],
-#     differences=diff1,
-#     function=ill.VerticalHorizontal,
-#     name="VerticalHorizontal",
-# )
+ill.VerticalHorizontal(illusion_strength=-33, difference=1).to_image(width=800, height=600).save(
+    "materials/instructions/VerticalHorizontal_Demo.png"
+)
 
-# data_block2 = generate_images(
-#     data_block2,
-#     strengths=np.concatenate((strengths[0::2], [0])),
-#     differences=diff2,
-#     function=ill.VerticalHorizontal,
-#     name="VerticalHorizontal",
-# )
+data_training = generate_images(
+    data_training,
+    strengths=[-33, 0, 33],
+    differences=[-0.9, 0.9],
+    function=ill.VerticalHorizontal,
+    name="VerticalHorizontal",
+)
+
+# Illusion task
+# ----------------
+
+_, strengths2, strengths1 = doublelinspace(mini=3.3, maxi=33, size=n, transformation="square")
+_, diffs1, diffs2 = doublelinspace(mini=0.05, maxi=0.225, size=n, transformation="square")
+
+
+data_block1 = generate_images(
+    data_block1,
+    strengths=strengths1,
+    differences=diffs1,
+    function=ill.VerticalHorizontal,
+    name="VerticalHorizontal",
+)
+
+data_block2 = generate_images(
+    data_block2,
+    strengths=strengths2,
+    differences=diffs2,
+    function=ill.VerticalHorizontal,
+    name="VerticalHorizontal",
+)
+
+
+# -------------------------- Save data --------------------------
+save_json(data_perceptual1, name="stimuli_perceptual1")
+save_json(data_perceptual2, name="stimuli_perceptual2")
+save_json(data_training, name="stimuli_training")
+save_json(data_block1, name="stimuli_part1")
+save_json(data_block2, name="stimuli_part2")
+
+(
+    len(data_perceptual1)
+    + len(data_perceptual2)
+    + len(data_training)
+    + len(data_block1)
+    + len(data_block2)
+)
+
 
 # # target_only
 # # -----------
@@ -535,9 +573,3 @@ diff2 = np.concatenate((diffs[1 : n // 2 : 2], diffs[n // 2 :: 2]))
 #     function=ill.Contrast,
 #     name="Contrast",
 # )
-
-
-# # -------------------------- Save data --------------------------
-# save_json(data_training, name="stimuli_training")
-# save_json(data_block1, name="stimuli_part1")
-# save_json(data_block2, name="stimuli_part2")
