@@ -192,20 +192,19 @@
         },
     }
 
-    timeline.push(participant_info, demographics);
-    timeline.push(fixation)
-
+    // timeline.push(participant_info, demographics);
+    //timeline.push(fixation)
 
     // Preload Instructions Stimuli
     timeline.push({
         type: jsPsychPreload,
         images: [
-            "utils/materials/instructions/Ebbinghaus_Demo.png",
-            "utils/materials/instructions/Ebbinghaus_DemoPerceptual.png",
-            "utils/materials/instructions/MullerLyer_Demo.png",
-            "utils/materials/instructions/MullerLyer_DemoPerceptual.png",
-            "utils/materials/instructions/VerticalHorizontal_Demo.png",
-            "utils/materials/instructions/VerticalHorizontal_DemoPerceptual.png",
+            "materials/instructions/Ebbinghaus_Demo.png",
+            "materials/instructions/Ebbinghaus_DemoPerceptual.png",
+            "materials/instructions/MullerLyer_Demo.png",
+            "materials/instructions/MullerLyer_DemoPerceptual.png",
+            "materials/instructions/VerticalHorizontal_Demo.png",
+            "materials/instructions/VerticalHorizontal_DemoPerceptual.png",
         ],
     })
 
@@ -226,8 +225,8 @@
     /*  -----------------------Practice Block-------------------------*/
     /* ============================================================== */
 
-    var block_number = 0
-    var trial_number = 0
+    // var block_number = 0
+    // var trial_number = 0
 
     /* ----------------------Ebbinghaus Practice----------------------------*/
     // Ebbinghaus Practice
@@ -248,7 +247,7 @@
 
     timeline.push({timeline: mullerlyer_practice})
 
-    /* ----------------------Vertical Horizaontal Practice----------------------------*/
+    // /* ----------------------Vertical Horizaontal Practice----------------------------*/
     var verticalhorizontal_practice = make_trial(
         (stimuli = stimuli_training),
         (instructions = "<p><b>Practice</b></p>" + verticalhorizontal_instructions), (illusion_name = "VerticalHorizontal"),
@@ -345,7 +344,7 @@
                 required: true
             })
         }
-        
+
         var IPIP6 = {
             type: jsPsychMultipleSlider,  // custom plugin in utils
             questions: IPIP_items,
@@ -444,11 +443,11 @@
     }
     timeline.push(end_experiment)
 
-    // // Fullscreen mode
-    // timeline.push({
-    //     type: jsPsychFullscreen,
-    //     fullscreen_mode: false,
-    // })
+    // Fullscreen mode
+    timeline.push({
+        type: jsPsychFullscreen,
+        fullscreen_mode: false,
+    })
 
 
     // /* Close connection to Pavlovia---*/

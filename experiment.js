@@ -71,24 +71,37 @@ function get_debrief_display(results, type = "Block") {
 }
 
 // Set fixation cross
-var fix_cross = ["+", " +", "+ ", "\n+", "+\n", "\n +", "\n+ ", " +\n", "+ \n"]
-function random_item(items){
-    return items[Math.floor(Math.random()*items.length)];
-}
+// var randFixCross = [{fix_cross:"+",
+//                  fix_cross: "+",
+//                  fix_cross: "+ ",
+//                  fix_cross: "\n+",
+//                  fix_cross: "+\n",
+//                  fix_cross:"\n +",
+//                  fix_cross:"\n+ ",
+//                  fix_cross:" +\n",
+//                  fix_cross:"+ \n"}]
 
-var fixation = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus:'<p style="color: black; font-size: 60px;">' + random_item(fix_cross) + "</p>",
-    choices: "NO_KEYS" /* no responses will be accepted as a valid response */,
-    // trial_duration: 0, // (for testing)
-    trial_duration: function () {
-        return randomInteger(500, 1000) // Function from RealityBending/JSmisc
-    },
-    save_trial_parameters: {
-        trial_duration: true,
-    },
-    data: { screen: "fixation" },
-}
+// function random_item(items){
+//     return items[Math.floor(Math.random()*items.length)];
+// }
+
+// var fixation = {
+//     type: jsPsychHtmlKeyboardResponse,
+//     stimulus:
+//         '<p style="color: black; font-size: 60px;">' +
+//         jsPsych.timelineVariable("fix_cross") +
+//         //fix_cross[randomInteger(0, fix_cross.length-1)] +
+//         "</p>",
+//     choices: "NO_KEYS" /* no responses will be accepted as a valid response */,
+//     // trial_duration: 0, // (for testing)
+//     trial_duration: function () {
+//         return randomInteger(500, 1000) // Function from RealityBending/JSmisc
+//     },
+//     save_trial_parameters: {
+//         trial_duration: true,
+//     },
+//     data: { screen: "fixation" },
+// }
 
 // Break
 var make_break1 = {
@@ -315,6 +328,26 @@ function make_trial(stimuli, instructions, illusion_name, type) {
     // Define trial
     var trial = create_trial(illusion_name, (type = type))
 
+    // Define fixation
+    var fixation = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function(){
+            var rand_cross = `<p style="color: black; font-size: 60px;">`+
+            jsPsych.timelineVariable("fix_cross")+
+            `</p>`;
+            return rand_cross
+        },
+        choices: "NO_KEYS" /* no responses will be accepted as a valid response */,
+        // trial_duration: 0, // (for testing)
+        trial_duration: function () {
+            return randomInteger(500, 1000) // Function from RealityBending/JSmisc
+        },
+        save_trial_parameters: {
+            trial_duration: true,
+        },
+        data: { screen: "fixation" },
+    }
+
     // Create Trials timeline
     timeline.push({
         timeline: [fixation, trial],
@@ -351,7 +384,7 @@ const mullerlyer_instructions =
     "<p>Your task is to select which <b>line is longer</b> in length as fast as you can, without making errors.</p>" +
     "<p>Don't get distracted by the surrounding black arrows at the end of the red lines!</p>" +
     "<p>Press <b>the UP or the DOWN arrow</b> to indicate where is the longer <b>red line.</b></p>" +
-    "<div style='float: center'><img src='utils/materials/instructions/MullerLyer_Demo.png' height='300'></img>" +
+    "<div style='float: center'><img src='materials/instructions/MullerLyer_Demo.png' height='300'></img>" +
     "<p><img src='utils/answer/answer_updown_keyboard.PNG' height='150'></img></p>" +
     "<p class='small'>In this example, the correct answer is the <b>UP arrow</b>.</p></div>" +
     "<p>Are you ready? <b>Press ENTER to start</b></p>"
@@ -361,7 +394,7 @@ const ebbinghaus_instructions =
     "<p>Your task is to select which <b>red circle is bigger</b> in size as fast as you can, without making errors.</p>" +
     "<p>Don't get distracted by the surrounding black circles around the red circles!</p>" +
     "<p>Press <b>the LEFT or the RIGHT arrow</b> to indicate which is the bigger <b>red circle.</b></p>" +
-    "<div style='float: center'><img src='utils/materials/instructions/Ebbinghaus_Demo.png' height='300'></img>" +
+    "<div style='float: center'><img src='materials/instructions/Ebbinghaus_Demo.png' height='300'></img>" +
     "<p><img src='utils/answer/answer_leftright_keyboard.PNG' height='150'></img></p>" +
     "<p class='small'>In this example, the correct answer is the <b>LEFT arrow</b>.</p></div>" +
     "<p>Are you ready? <b>Press ENTER to start</b></p>"
@@ -371,7 +404,7 @@ const verticalhorizontal_instructions =
     "<p>Your task is to tell <b>which line is longer</b> in length as fast as you can, and without making errors.</p>" +
     "<p>Don't get distracted by the orientation of the lines!</p>" +
     "<p>Press <b>the LEFT or the RIGHT arrow</b> to indicate which <b>line is the longer one.</b></p>" +
-    "<div style='float: center'><img src='utils/materials/instructions/VerticalHorizontal_Demo.png' height='300'></img>" +
+    "<div style='float: center'><img src='materials/instructions/VerticalHorizontal_Demo.png' height='300'></img>" +
     "<p><img src='utils/answer/answer_leftright_keyboard.PNG' height='150'></img></p>" +
     "<p class='small'>In this example, the correct answer is the <b>LEFT arrow</b>.</p></div>" +
     "<p>Are you ready? <b>Press ENTER to start</b></p>"
