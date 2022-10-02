@@ -225,53 +225,53 @@
     /*  -----------------------Practice Block-------------------------*/
     /* ============================================================== */
 
-    // var block_number = 0
+    // var block_number = 0   //For debugging only
     // var trial_number = 0
 
     /* ----------------------Ebbinghaus Practice----------------------------*/
     // Ebbinghaus Practice
-    var ebbinghaus_practice = make_trial(
-        (stimuli = stimuli_training),
-        (instructions = "<p><b>Practice</b></p>" + ebbinghaus_instructions),
-        (illusion_name = "Ebbinghaus"),
-        (type = 'leftright'))
+    // var ebbinghaus_practice = make_trial(
+    //     (stimuli = stimuli_training),
+    //     (instructions = "<p><b>Practice</b></p>" + ebbinghaus_instructions),
+    //     (illusion_name = "Ebbinghaus"),
+    //     (type = 'leftright'))
 
-    timeline.push({timeline: ebbinghaus_practice})
+    // timeline.push({timeline: ebbinghaus_practice})
 
-    /* ----------------------Muller-Lyer Practice----------------------------*/
-    var mullerlyer_practice = make_trial(
-        (stimuli = stimuli_training),
-        (instructions = "<p><b>Practice</b></p>" + mullerlyer_instructions),
-        (illusion_name = "MullerLyer"),
-        (type = 'updown'))
+    // /* ----------------------Muller-Lyer Practice----------------------------*/
+    // var mullerlyer_practice = make_trial(
+    //     (stimuli = stimuli_training),
+    //     (instructions = "<p><b>Practice</b></p>" + mullerlyer_instructions),
+    //     (illusion_name = "MullerLyer"),
+    //     (type = 'updown'))
 
-    timeline.push({timeline: mullerlyer_practice})
+    // timeline.push({timeline: mullerlyer_practice})
 
-    // /* ----------------------Vertical Horizaontal Practice----------------------------*/
-    var verticalhorizontal_practice = make_trial(
-        (stimuli = stimuli_training),
-        (instructions = "<p><b>Practice</b></p>" + verticalhorizontal_instructions), (illusion_name = "VerticalHorizontal"),
-        (type = 'leftright'))
+    // // /* ----------------------Vertical Horizaontal Practice----------------------------*/
+    // var verticalhorizontal_practice = make_trial(
+    //     (stimuli = stimuli_training),
+    //     (instructions = "<p><b>Practice</b></p>" + verticalhorizontal_instructions), (illusion_name = "VerticalHorizontal"),
+    //     (type = 'leftright'))
 
-    timeline.push({timeline: verticalhorizontal_practice})
+    // timeline.push({timeline: verticalhorizontal_practice})
 
-    /* ================================================================ */
-    /* ---------------------- END OF Practice ----------------------- */
-    /* ================================================================ */
-    var end_practice = {
-        type: jsPsychHtmlButtonResponse,
-        choices: ["Let's Play!"],
-        stimulus: "<p><b>TRAINING COMPLETED</b></p>" +
-            "<p><i>Are you ready for the real game?</i></p>" +
-            "<p>This time, there will be more trials, and some might be harder too. Moreover, after each illusion block, a <b>score</b> will be calculated based on speed (time you took to answer) and accuracy (number of errors).</p>" +
-            "<p>Try to keep up a high score!</p><br>" +
-            "<p>Note that it can be <i>really</i> challenging at times, so you will need to rely on your <b>intuition</b> and gut feeling to answer as fast as you can without making errors.</p>" +
-            "<p>Each illusion block will be repeated two times (so that you have the opportunity to improve your score!), but the order of the blocks is random.</p>" +
-            "<p>Remember, your goal is to be as <b>fast</b> and <b>accurate</b> as possible.</p>" +
-            "<p>Good luck!</p><br>",
-        data: {screen: "practice_debrief"},
-    }
-    timeline.push(end_practice)
+    // /* ================================================================ */
+    // /* ---------------------- END OF Practice ----------------------- */
+    // /* ================================================================ */
+    // var end_practice = {
+    //     type: jsPsychHtmlButtonResponse,
+    //     choices: ["Let's Play!"],
+    //     stimulus: "<p><b>TRAINING COMPLETED</b></p>" +
+    //         "<p><i>Are you ready for the real game?</i></p>" +
+    //         "<p>This time, there will be more trials, and some might be harder too. Moreover, after each illusion block, a <b>score</b> will be calculated based on speed (time you took to answer) and accuracy (number of errors).</p>" +
+    //         "<p>Try to keep up a high score!</p><br>" +
+    //         "<p>Note that it can be <i>really</i> challenging at times, so you will need to rely on your <b>intuition</b> and gut feeling to answer as fast as you can without making errors.</p>" +
+    //         "<p>Each illusion block will be repeated two times (so that you have the opportunity to improve your score!), but the order of the blocks is random.</p>" +
+    //         "<p>Remember, your goal is to be as <b>fast</b> and <b>accurate</b> as possible.</p>" +
+    //         "<p>Good luck!</p><br>",
+    //     data: {screen: "practice_debrief"},
+    // }
+    // timeline.push(end_practice)
 
 
     /* ============================================================== */
@@ -282,11 +282,16 @@
     var block_number = 1 // block indexing variable
 
     // Set up block loop for different stimuli set
-    for (var i of [1, 2]) {
+    // for (var i of [1, 2]) {
+    for (var i = 1; i < 5; i++) {
         if (i === 1) {
             stimuli = stimuli_part1
-        } else {
+        } else if (i === 2) {
             stimuli = stimuli_part2
+        } else if (i === 3 ){
+            stimuli = stimuli_perceptual1
+        } else {
+            stimuli = stimuli_perceptual2
         }
 
         /* ================================================================ */
@@ -332,16 +337,90 @@
             (type = "leftright")
         )
 
+        /* ================================================================ */
+        /* ---------------------- MULLERLYER Perceptual --------------------- */
+        /* ================================================================ */
+        var timeline_mullerlyer_perceptual = make_trial(stimuli,
+            (instructions = function () {
+                return "<p><b>Part " +
+                    block_number +
+                    "</b></p>" +
+                    mullerlyer_instructions_perceptual
+            }),
+            (illusion_name = "MullerLyer"),
+            (type = "updown")
+        )
+
+        /* ================================================================ */
+        /* --------------------- EBBINGHAUS Perceptual ---------------------- */
+        /* ================================================================ */
+        var timeline_ebbinghaus_perceptual = make_trial(stimuli,
+            (instructions = function () {
+                return "<p><b>Part " +
+                    block_number +
+                    "</b></p>" +
+                    ebbinghaus_instructions_perceptual
+            }),
+            (illusion_name = "Ebbinghaus"),
+            (type = "leftright")
+        )
+
+
+        /* ================================================================ */
+        /* ----------------- VERTICAL-HORIZONTAL Perceptual ----------------- */
+        /* ================================================================ */
+        var timeline_verticalhorizontal_perceptual = make_trial(stimuli,
+            (instructions = function () {
+                return "<p><b>Part " +
+                    block_number +
+                    "</b></p>" +
+                    verticalhorizontal_instructions_perceptual
+            }),
+            (illusion_name = "VerticalHorizontal"),
+            (type = "leftright")
+        )
+
+
          /* ================================================================ */
         /* --------------------- Psychometric scales----------------------- */
         /* ================================================================ */
         var IPIP_items = []
-        for (const [index, element] of IPIP.entries()) {
+        //for (const [index, element] of IPIP.entries()) {
+        for (var n = 0; n < 8; n++) {
             IPIP_items.push({
-                prompt: element,
-                name: IPIP_dim[index],
+                prompt: IPIP[n],
+                name: IPIP_dim[n],
                 ticks:  ["Very Inaccurate", "Very Accurate"],
-                required: true
+                required: false,
+                min: 0,
+                max: 1,
+                step: 0.01,
+                slider_start: 0.5
+                })
+        }
+
+        // Attention Check 1
+        IPIP_items.push({
+            prompt: "<b>Please select Very Inaccurate to demonstrate your attention</b><br>",
+            name: "Attention_Check_1",
+            ticks: ["Very Inaccurate", "Very Accurate"],
+            required: false,
+            min: 0,
+            max: 1,
+            step: 0.01,
+            slider_start: 0.5
+        })
+
+        for (var n = 8; n < 24; n++){
+            IPIP_items.push({
+                prompt: IPIP[n],
+                name: IPIP_dim[n],
+                ticks: ["Very Inaccurate", "Very Accurate"],
+                required:false,
+                min: 0,
+                max: 1,
+                step: 0.01,
+                slider_start: 0.5
             })
         }
 
@@ -351,11 +430,11 @@
             randomize_question_order: false,
             preamble: "<p>For this part, we are interested in finding out more about your traits.</p>" +
                 "<p>Please answer the following questions based on how accurately each statement describes you.</p>",
-            require_movement: true,
-            slider_width: 600,
-            min: 0,
-            max: 100,
-            slider_start: 50,
+            require_movement: false,
+            // slider_width: 600,
+            // min: 0,
+            // max: 100,
+            // slider_start: 50,
             on_start: function () {
                 ; (document.body.style.cursor = "auto"),
                     (document.querySelector(
@@ -368,13 +447,43 @@
         };
 
         var PID_items = []
-        for (const [index, element] of PID.entries()) {
+        // for (const [index, element] of PID.entries()) {
+        for (var n = 0; n <20; n++){
             PID_items.push({
-                prompt: element,
-                name: PID_dim[index],
+                prompt: PID[n],
+                name: PID_dim[n],
                 ticks: ["Often False", "Often True"],
-                required: true
-            })
+                required: false,
+                min: 0,
+                max: 1,
+                step: 0.01,
+                slider_start: 0.5
+                })
+        }
+
+        // Attention Check 2
+        PID_items.push({
+            prompt: "<b>I am paying attention right now</b><br>",
+            name: "Attention_Check_2",
+            ticks: ["Strongly Disagree", "Strongly Agree"],
+            required: false,
+            min: 0,
+            max: 1,
+            step: 0.01,
+            slider_start: 0.5
+        })
+
+        for (var n = 20; n < 25; n++){
+            PID_items.push({
+                prompt: PID[n],
+                name: PID_dim[n],
+                ticks: ["Often False", "Often True"],
+                required: false,
+                min: 0,
+                max: 1,
+                step: 0.01,
+                slider_start: 0.5
+                })
         }
 
         var PID5 = {
@@ -385,11 +494,11 @@
                 "<p>For this part, we are interested in finding out how you would describe yourself.</p>" +
                 "<p>There are no right or wrong answers so you can respond as honestly as possible</p>" +
                 "<p>We would like you to take your time and read each statement carefully, selecting the response that best describes you.</p>",
-            require_movement: true,
-            slider_width: 600,
-            min: 0,
-            max: 100,
-            slider_start: 50,
+            require_movement: false,
+            // slider_width: 600,
+            // min: 0,
+            // max: 100,
+            // slider_start: 50,
             on_start: function () {
                 ; (document.body.style.cursor = "auto"),
                     (document.querySelector(
@@ -404,19 +513,35 @@
         /* ================================================================ */
         /* ---------------------- END OF EXPERIMENT ----------------------- */
         /* ================================================================ */
-        for (var t of jsPsych.randomization.shuffleNoRepeats([
-            timeline_mullerlyer,
-            timeline_ebbinghaus,
-            timeline_verticalhorizontal,
+        if (i < 3){
+            for (var t of jsPsych.randomization.shuffleNoRepeats([
+                timeline_mullerlyer,
+                timeline_ebbinghaus,
+                timeline_verticalhorizontal,
+            ])) {
+                timeline.push({timeline: t})
+            }
+        } else {
+            for (var t_percep of jsPsych.randomization.shuffleNoRepeats([
+                timeline_mullerlyer_perceptual,
+                timeline_ebbinghaus_perceptual,
+                timeline_verticalhorizontal_perceptual,
         ])) {
-            timeline.push({timeline: t})
-        }
-        if (i === 1) {
+            timeline.push({timeline: t_percep})
+        }}
+        if (i === 2) {
             timeline.push(make_break1)
             timeline.push(IPIP6)
             timeline.push(PID5)
             timeline.push(make_break2)
         }
+        // for (var t_percep of jsPsych.randomization.shuffleNoRepeats([
+        //     timeline_mullerlyer_perceptual,
+        //     timeline_ebbinghaus_perceptual,
+        //     timeline_verticalhorizontal_perceptual,
+        // ])) {
+        //     timeline.push({timeline: t_percep})
+        // }
     }
 
     // Debriefing Information
