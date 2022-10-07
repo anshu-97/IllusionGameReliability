@@ -192,7 +192,7 @@
         },
     }
 
-    // timeline.push(participant_info, demographics);
+    timeline.push(participant_info, demographics);
     //timeline.push(fixation)
 
     // Preload Instructions Stimuli
@@ -230,48 +230,48 @@
 
     /* ----------------------Ebbinghaus Practice----------------------------*/
     // Ebbinghaus Practice
-    // var ebbinghaus_practice = make_trial(
-    //     (stimuli = stimuli_training),
-    //     (instructions = "<p><b>Practice</b></p>" + ebbinghaus_instructions),
-    //     (illusion_name = "Ebbinghaus"),
-    //     (type = 'leftright'))
+    var ebbinghaus_practice = make_trial(
+        (stimuli = stimuli_training),
+        (instructions = "<p><b>Practice</b></p>" + ebbinghaus_instructions),
+        (illusion_name = "Ebbinghaus"),
+        (type = 'leftright'))
 
-    // timeline.push({timeline: ebbinghaus_practice})
+    timeline.push({timeline: ebbinghaus_practice})
 
-    // /* ----------------------Muller-Lyer Practice----------------------------*/
-    // var mullerlyer_practice = make_trial(
-    //     (stimuli = stimuli_training),
-    //     (instructions = "<p><b>Practice</b></p>" + mullerlyer_instructions),
-    //     (illusion_name = "MullerLyer"),
-    //     (type = 'updown'))
+    /* ----------------------Muller-Lyer Practice----------------------------*/
+    var mullerlyer_practice = make_trial(
+        (stimuli = stimuli_training),
+        (instructions = "<p><b>Practice</b></p>" + mullerlyer_instructions),
+        (illusion_name = "MullerLyer"),
+        (type = 'updown'))
 
-    // timeline.push({timeline: mullerlyer_practice})
+    timeline.push({timeline: mullerlyer_practice})
 
-    // // /* ----------------------Vertical Horizaontal Practice----------------------------*/
-    // var verticalhorizontal_practice = make_trial(
-    //     (stimuli = stimuli_training),
-    //     (instructions = "<p><b>Practice</b></p>" + verticalhorizontal_instructions), (illusion_name = "VerticalHorizontal"),
-    //     (type = 'leftright'))
+    // /* ----------------------Vertical Horizaontal Practice----------------------------*/
+    var verticalhorizontal_practice = make_trial(
+        (stimuli = stimuli_training),
+        (instructions = "<p><b>Practice</b></p>" + verticalhorizontal_instructions), (illusion_name = "VerticalHorizontal"),
+        (type = 'leftright'))
 
-    // timeline.push({timeline: verticalhorizontal_practice})
+    timeline.push({timeline: verticalhorizontal_practice})
 
-    // /* ================================================================ */
-    // /* ---------------------- END OF Practice ----------------------- */
-    // /* ================================================================ */
-    // var end_practice = {
-    //     type: jsPsychHtmlButtonResponse,
-    //     choices: ["Let's Play!"],
-    //     stimulus: "<p><b>TRAINING COMPLETED</b></p>" +
-    //         "<p><i>Are you ready for the real game?</i></p>" +
-    //         "<p>This time, there will be more trials, and some might be harder too. Moreover, after each illusion block, a <b>score</b> will be calculated based on speed (time you took to answer) and accuracy (number of errors).</p>" +
-    //         "<p>Try to keep up a high score!</p><br>" +
-    //         "<p>Note that it can be <i>really</i> challenging at times, so you will need to rely on your <b>intuition</b> and gut feeling to answer as fast as you can without making errors.</p>" +
-    //         "<p>Each illusion block will be repeated two times (so that you have the opportunity to improve your score!), but the order of the blocks is random.</p>" +
-    //         "<p>Remember, your goal is to be as <b>fast</b> and <b>accurate</b> as possible.</p>" +
-    //         "<p>Good luck!</p><br>",
-    //     data: {screen: "practice_debrief"},
-    // }
-    // timeline.push(end_practice)
+    /* ================================================================ */
+    /* ---------------------- END OF Practice ----------------------- */
+    /* ================================================================ */
+    var end_practice = {
+        type: jsPsychHtmlButtonResponse,
+        choices: ["Let's Play!"],
+        stimulus: "<p><b>TRAINING COMPLETED</b></p>" +
+            "<p><i>Are you ready for the real game?</i></p>" +
+            "<p>This time, there will be more trials, and some might be harder too. Moreover, after each illusion block, a <b>score</b> will be calculated based on speed (time you took to answer) and accuracy (number of errors).</p>" +
+            "<p>Try to keep up a high score!</p><br>" +
+            "<p>Note that it can be <i>really</i> challenging at times, so you will need to rely on your <b>intuition</b> and gut feeling to answer as fast as you can without making errors.</p>" +
+            "<p>Each illusion block will be repeated two times (so that you have the opportunity to improve your score!), but the order of the blocks is random.</p>" +
+            "<p>Remember, your goal is to be as <b>fast</b> and <b>accurate</b> as possible.</p>" +
+            "<p>Good luck!</p><br>",
+        data: {screen: "practice_debrief"},
+    }
+    timeline.push(end_practice)
 
 
     /* ============================================================== */
